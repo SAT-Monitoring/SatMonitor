@@ -1,0 +1,458 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Machine Dashboard</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #0f141a;
+        --panel: #151b23;
+        --panel-2: #10161f;
+        --border: #2a333d;
+        --text: #e6edf3;
+        --text-muted: #9aa4b2;
+        --accent-green: #3fb950;
+        --accent-red: #f85149;
+        --accent-amber: #d29922;
+        --radius: 14px;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+        background: radial-gradient(1200px 600px at 10% -10%, #1f2a37 0, transparent 60%),
+          radial-gradient(900px 500px at 100% 0, #182231 0, transparent 55%),
+          var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+        padding: 40px 40px 56px;
+      }
+
+      .container {
+        max-width: 1400px;
+        margin: 0 auto;
+      }
+
+      .header {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 24px;
+      }
+
+      .logo {
+        width: 52px;
+        height: 52px;
+        border-radius: 12px;
+        background: #0b1117;
+        border: 1px solid var(--border);
+        padding: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .logo img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+
+      .title {
+        font-size: 22px;
+        font-weight: 600;
+        letter-spacing: 0.02em;
+        margin-bottom: 4px;
+      }
+      
+      .subtitle {
+        font-size: 12px;
+        color: var(--text-muted);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .summary-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 18px;
+        margin-bottom: 24px;
+      }
+
+      .summary-card {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 20px 22px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        min-height: 50px; 
+      }
+
+      .summary-label {
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--text-muted);
+      }
+
+      .summary-value {
+        font-size: 34px;
+        font-weight: 600;
+      }
+
+      .summary-value.running {
+        color: var(--accent-green);
+      }
+
+      .summary-value.stopped {
+        color: var(--accent-red);
+      }
+
+      .summary-value.offline {
+        color: var(--accent-amber);
+      }
+
+      .machines-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 40px;
+      }
+
+      .machine-card {
+        background: var(--panel-2);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 20px 22px;
+        min-height: 200px;
+        border-top: 3px solid var(--border);
+      }
+
+      .machine-card.running {
+        border-top-color: var(--accent-green);
+      }
+
+      .machine-card.stopped {
+        border-top-color: var(--accent-red);
+      }
+
+      .machine-card.idle {
+        border-top-color: var(--accent-amber);
+      }
+
+      .machine-card.offline {
+        border-top-color: var(--accent-amber);
+      }
+
+      .card-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 12px;
+      }
+
+      .card-name {
+        font-size: 16px;
+        font-weight: 600;
+      }
+
+      .card-meta {
+        font-size: 12px;
+        color: var(--text-muted);
+        margin-top: 2px;
+      }
+
+      .badge {
+        font-size: 11px;
+        padding: 5px 10px;
+        border-radius: 999px;
+        font-weight: 600;
+      }
+
+      .badge.running {
+        background: rgba(63, 185, 80, 0.2);
+        color: var(--accent-green);
+      }
+
+      .badge.stopped {
+        background: rgba(248, 81, 73, 0.2);
+        color: var(--accent-red);
+      }
+
+      .badge.idle {
+        background: rgba(210, 153, 34, 0.2);
+        color: var(--accent-amber);
+      }
+
+      .badge.offline {
+        background: rgba(210, 153, 34, 0.2);
+        color: var(--accent-amber);
+      }
+
+      .card-stats {
+        border-top: 1px solid var(--border);
+        padding-top: 12px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .stat-row {
+        display: flex;
+        justify-content: space-between;
+        font-size: 13px;
+      }
+
+      .stat-label {
+        color: var(--text-muted);
+      }
+
+      .stat-value {
+        font-weight: 600;
+      }
+
+      .card-footer {
+        margin-top: 12px;
+        font-size: 11px;
+        color: var(--text-muted);
+      }
+
+      @media (max-width: 900px) {
+        body { padding: 24px; }
+        .summary-grid { grid-template-columns: 1fr; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <div class="logo">
+          <img src="sat-logo.png" alt="South Asia Textiles Limited" />
+        </div>
+        <div>
+          <div class="title">SAT - Finishing Insight Center</div>
+          <div class="subtitle">South Asia Textiles Limited</div>
+        </div>
+      </div>
+
+      <div class="summary-grid">
+        <div class="summary-card">
+          <div class="summary-label">Total machines</div>
+          <div class="summary-value" id="total-count">8</div>
+        </div>
+        <div class="summary-card">
+          <div class="summary-label">Running</div>
+          <div class="summary-value running" id="running-count">3</div>
+        </div>
+        <div class="summary-card">
+          <div class="summary-label">Stopped</div>
+          <div class="summary-value stopped" id="stopped-count">5</div>
+        </div>
+      </div>
+
+      <div class="machines-grid">
+        <div class="machine-card running" data-id="Compactor 1">
+          <div class="card-top">
+            <div>
+              <div class="card-name">Compactor 1</div>
+              <div class="card-meta" data-field="ip">Line A</div>
+            </div>
+            <span class="badge running" data-field="status">RUNNING</span>
+          </div>
+          <div class="card-stats">
+            <div class="stat-row"><span class="stat-label">Daily hours</span><span class="stat-value" data-field="dailyHours">6.4 hrs</span></div>
+            <div class="stat-row"><span class="stat-label">Total hours</span><span class="stat-value" data-field="totalHours">3065.5 hrs</span></div>
+            <div class="stat-row"><span class="stat-label">Running Speed</span><span class="stat-value" data-field="speed">120 m/min</span></div>
+          </div>
+          <div class="card-footer" data-field="lastUpdated">Last update: 14:50</div>
+        </div>
+
+        <div class="machine-card stopped" data-id="Compactor 2">
+          <div class="card-top">
+            <div>
+              <div class="card-name">Compactor 2</div>
+              <div class="card-meta" data-field="ip">Line A</div>
+            </div>
+            <span class="badge stopped" data-field="status">STOPPED</span>
+          </div>
+          <div class="card-stats">
+            <div class="stat-row"><span class="stat-label">Daily hours</span><span class="stat-value" data-field="dailyHours">0.0 hrs</span></div>
+            <div class="stat-row"><span class="stat-label">Total hours</span><span class="stat-value" data-field="totalHours">0.0 hrs</span></div>
+            <div class="stat-row"><span class="stat-label">Running Speed</span><span class="stat-value" data-field="speed">0 m/min</span></div>
+          </div>
+          <div class="card-footer" data-field="lastUpdated">Last update: 10:18</div>
+        </div>
+
+        <div class="machine-card stopped" data-id="Stenter 3">
+          <div class="card-top">
+            <div>
+              <div class="card-name">Stenter 3</div>
+              <div class="card-meta" data-field="ip">Line B</div>
+            </div>
+            <span class="badge stopped" data-field="status">STOPPED</span>
+          </div>
+          <div class="card-stats">
+            <div class="stat-row"><span class="stat-label">Daily hours</span><span class="stat-value" data-field="dailyHours">0.0 hrs</span></div>
+            <div class="stat-row"><span class="stat-label">Total hours</span><span class="stat-value" data-field="totalHours">0.0 hrs</span></div>
+            <div class="stat-row"><span class="stat-label">Running Speed</span><span class="stat-value" data-field="speed">0 m/min</span></div>
+          </div>
+          <div class="card-footer" data-field="lastUpdated">Last update: 10:18</div>
+        </div>
+
+        <div class="machine-card running" data-id="Stenter 2">
+          <div class="card-top">
+            <div>
+              <div class="card-name">Stenter 2</div>
+              <div class="card-meta" data-field="ip">Line B</div>
+            </div>
+            <span class="badge running" data-field="status">RUNNING</span>
+          </div>
+          <div class="card-stats">
+            <div class="stat-row"><span class="stat-label">Daily hours</span><span class="stat-value" data-field="dailyHours">2.6 hrs</span></div>
+            <div class="stat-row"><span class="stat-label">Total hours</span><span class="stat-value" data-field="totalHours">2695.3 hrs</span></div>
+            <div class="stat-row"><span class="stat-label">Running Speed</span><span class="stat-value" data-field="speed">120 m/min</span></div>
+          </div>
+          <div class="card-footer" data-field="lastUpdated">Last update: 14:46</div>
+        </div>
+
+        <div class="machine-card stopped" data-id="Stenter 1">
+          <div class="card-top">
+            <div>
+              <div class="card-name">Stenter 1</div>
+              <div class="card-meta" data-field="ip">Line C</div>
+            </div>
+            <span class="badge stopped" data-field="status">STOPPED</span>
+          </div>
+          <div class="card-stats">
+            <div class="stat-row"><span class="stat-label">Daily hours</span><span class="stat-value" data-field="dailyHours">0.0 hrs</span></div>
+            <div class="stat-row"><span class="stat-label">Total hours</span><span class="stat-value" data-field="totalHours">0.0 hrs</span></div>
+            <div class="stat-row"><span class="stat-label">Running Speed</span><span class="stat-value" data-field="speed">0 m/min</span></div>
+          </div>
+          <div class="card-footer" data-field="lastUpdated">Last update: 10:18</div>
+        </div>
+
+        <div class="machine-card idle" data-id="Stenter 5">
+          <div class="card-top">
+            <div>
+              <div class="card-name">Stenter 5</div>
+              <div class="card-meta" data-field="ip">Line C</div>
+            </div>
+            <span class="badge idle" data-field="status">IDLE</span>
+          </div>
+          <div class="card-stats">
+            <div class="stat-row"><span class="stat-label">Daily hours</span><span class="stat-value" data-field="dailyHours">1.0 hrs</span></div>
+            <div class="stat-row"><span class="stat-label">Total hours</span><span class="stat-value" data-field="totalHours">1.0 hrs</span></div>
+            <div class="stat-row"><span class="stat-label">Running Speed</span><span class="stat-value" data-field="speed">0 m/min</span></div>
+          </div>
+          <div class="card-footer" data-field="lastUpdated">Last update: 07:11</div>
+        </div>
+
+        <div class="machine-card stopped" data-id="Stenter 6">
+          <div class="card-top">
+            <div>
+              <div class="card-name">Stenter 6</div>
+              <div class="card-meta" data-field="ip">Line D</div>
+            </div>
+            <span class="badge stopped" data-field="status">STOPPED</span>
+          </div>
+          <div class="card-stats">
+            <div class="stat-row"><span class="stat-label">Daily hours</span><span class="stat-value" data-field="dailyHours">0.0 hrs</span></div>
+            <div class="stat-row"><span class="stat-label">Total hours</span><span class="stat-value" data-field="totalHours">0.0 hrs</span></div>
+            <div class="stat-row"><span class="stat-label">Running Speed</span><span class="stat-value" data-field="speed">0 m/min</span></div>
+          </div>
+          <div class="card-footer" data-field="lastUpdated">Last update: 10:18</div>
+        </div>
+
+        <div class="machine-card running" data-id="Syntex Drier">
+          <div class="card-top">
+            <div>
+              <div class="card-name">Syntex Drier</div>
+              <div class="card-meta" data-field="ip">Line D</div>
+            </div>
+            <span class="badge running" data-field="status">RUNNING</span>
+          </div>
+          <div class="card-stats">
+            <div class="stat-row"><span class="stat-label">Daily hours</span><span class="stat-value" data-field="dailyHours">3.2 hrs</span></div>
+            <div class="stat-row"><span class="stat-label">Total hours</span><span class="stat-value" data-field="totalHours">1420.8 hrs</span></div>
+            <div class="stat-row"><span class="stat-label">Running Speed</span><span class="stat-value" data-field="speed">120 m/min</span></div>
+          </div>
+          <div class="card-footer" data-field="lastUpdated">Last update: 14:48</div>
+        </div>
+      </div>
+    </div>
+    <script>
+      function normalizeStatus(status) {
+        const value = String(status || '').toLowerCase();
+        if (value === 'running') return 'running';
+        if (value === 'stopped') return 'stopped';
+        if (value === 'idle') return 'idle';
+        return 'offline';
+      }
+
+      function formatHours(value) {
+        if (value === null || value === undefined || value === '') return '0.0 hrs';
+        return Number(value).toFixed(1) + ' hrs';
+      }
+
+      function formatSpeed(value) {
+        if (value === null || value === undefined || value === '') return '0 m/min';
+        return Number(value).toFixed(1) + ' m/min';
+      }
+
+      function updateDashboard(payload) {
+        const machines = Array.isArray(payload.machines) ? payload.machines : [];
+
+        const total = machines.length;
+        const running = machines.filter(m => normalizeStatus(m.status) === 'running').length;
+        const stopped = machines.filter(m => normalizeStatus(m.status) === 'stopped').length;
+
+        document.getElementById('total-count').textContent = total;
+        document.getElementById('running-count').textContent = running;
+        document.getElementById('stopped-count').textContent = stopped;
+
+        machines.forEach(machine => {
+          const card = document.querySelector(`.machine-card[data-id="${machine.name}"]`);
+          if (!card) return;
+
+          const status = normalizeStatus(machine.status);
+          card.classList.remove('running', 'stopped', 'idle', 'offline');
+          card.classList.add(status);
+
+          const badge = card.querySelector('[data-field="status"]');
+          if (badge) {
+            badge.classList.remove('running', 'stopped', 'idle', 'offline');
+            badge.classList.add(status);
+            badge.textContent = status.toUpperCase();
+          }
+
+          const ip = card.querySelector('[data-field="ip"]');
+          if (ip) ip.textContent = machine.ip || '—';
+
+          const daily = card.querySelector('[data-field="dailyHours"]');
+          if (daily) daily.textContent = formatHours(machine.dailyHours);
+
+          const totalHours = card.querySelector('[data-field="totalHours"]');
+          if (totalHours) totalHours.textContent = formatHours(machine.totalHours);
+
+          const speed = card.querySelector('[data-field="speed"]');
+          if (speed) speed.textContent = formatSpeed(machine.speed);
+
+          const lastUpdated = card.querySelector('[data-field="lastUpdated"]');
+          if (lastUpdated) lastUpdated.textContent = 'Last update: ' + (machine.lastUpdated || '—');
+        });
+      }
+
+      window.updateDashboard = updateDashboard;
+    </script>
+    <script src="simulator.js"></script>
+  </body>
+</html>
