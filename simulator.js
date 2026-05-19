@@ -10,10 +10,7 @@
     { name: "Syntex Drier", status: "Offline", dailyHours: 0.0, totalHours: 0.0, ip: "", speed: 0, lastUpdated: "28/10/2025 15:08:46" }
   ];
 
-  function jitter(value, delta, min, max) {
-    const next = value + (Math.random() * delta * 2 - delta);
-    return Math.max(min, Math.min(max, next));
-  }
+  //function jitter(value, delta, min, max) {const next = value + (Math.random() * delta * 2 - delta); return Math.max(min, Math.min(max, next)); }
 
   function randomStatus(current) {
     const pool = ["Running", "Stopped", "Offline", "Idle"];
