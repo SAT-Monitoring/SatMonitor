@@ -21,8 +21,69 @@
     return pool[Math.floor(Math.random() * pool.length)];
   }
 
+  // --- MQTT LIVE DATA INTEGRATION ---
+  if (typeof mqtt !== 'undefined') {
+    // Secure WebSockets (wss://) and port 8884 for browser connections
+    const brokerUrl = "wss://fa57de5b1cfb45869f686d9e04b5f9f3.s1.eu.hivemq.cloud:8884/mqtt";
+    const options = {
+      username: "pamoda",
+      password: "pamoda1U23",
+      // Generate a random client ID to prevent connection collisions if you open multiple tabs
+      clientId: "WebDash_" + Math.random().toString(16).substring(2, 10) 
+    };
+
+    const client = mqtt.connect(brokerUrl, options);
+
+    client.on("connect", () => {
+      console.log("Connected to HiveMQ via WebSockets!");
+      client.subscribe("telemetry/machines/Compactor2");
+    });
+
+    client.on("message", (topic, message) => {
+      if (topic === "telemetry/machines/Compactor2") {
+        try {
+          const payload = JSON.parse(message.toString());
+          const compactor2 = machines.find(m => m.name === "Compactor 2");
+          
+          if (compactor2) {
+            // Update machine data with live MQTT values
+            compactor2.status = payload.status === 1 ? "Running" : "Stopped";
+            // Convert ESP32 minutes to Dashboard hours (2 decimals)
+            compactor2.dailyHours = +(payload.dayRun / 60).toFixed(2);
+            compactor2.totalHours = +(payload.totalRun / 60).toFixed(2);
+            compactor2.ip = payload.ip;
+            compactor2.speed = +(payload.speed).toFixed(2);
+            
+            // Generate current timestamp for last updated
+            const now = new Date();
+            const day = String(now.getDate()).padStart(2, "0");
+            const month = String(now.getMonth() + 1).padStart(2, "0");
+            const year = now.getFullYear();
+            const hours = String(now.getHours()).padStart(2, "0");
+            const mins = String(now.getMinutes()).padStart(2, "0");
+            const secs = String(now.getSeconds()).padStart(2, "0");
+            compactor2.lastUpdated = `${day}/${month}/${year} ${hours}:${mins}:${secs}`;
+            
+            // Force an immediate UI update when real data arrives
+            if (typeof window.updateDashboard === "function") {
+              window.updateDashboard({ machines });
+            }
+          }
+        } catch (error) {
+          console.error("Error parsing incoming MQTT JSON:", error);
+        }
+      }
+    });
+  } else {
+    console.warn("MQTT library missing! Add <script src='https://unpkg.com/mqtt/dist/mqtt.min.js'></script> to your HTML.");
+  }
+
+  // --- SIMULATOR TICK ---
   function tick() {
     machines.forEach(machine => {
+      // SKIP COMPACTOR 2: It is now controlled entirely by the live MQTT data above
+      if (machine.name === "Compactor 2") return; 
+
       machine.status = randomStatus(machine.status);
 
       if (machine.status === "Running") {
