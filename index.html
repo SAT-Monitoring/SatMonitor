@@ -19,11 +19,7 @@
         --radius: 14px;
       }
 
-      * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-      }
+      * { box-sizing: border-box; margin: 0; padding: 0; }
 
       body {
         font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
@@ -35,10 +31,7 @@
         padding: 40px 40px 56px;
       }
 
-      .container {
-        max-width: 1400px;
-        margin: 0 auto;
-      }
+      .container { max-width: 1400px; margin: 0 auto; }
 
       .header {
         display: flex;
@@ -48,161 +41,63 @@
       }
 
       .logo {
-        width: 52px;
-        height: 52px;
+        width: 52px; height: 52px;
         border-radius: 12px;
         background: #0b1117;
         border: 1px solid var(--border);
         padding: 6px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        display: flex; align-items: center; justify-content: center;
       }
 
-      .logo img {
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-      }
+      .logo img { width: 100%; height: 100%; object-fit: contain; }
 
-      .title {
-        font-size: 22px;
-        font-weight: 600;
-        letter-spacing: 0.02em;
-        margin-bottom: 4px;
-      }
-      
-      .subtitle {
-        font-size: 12px;
-        color: var(--text-muted);
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-      }
+      .title { font-size: 22px; font-weight: 600; letter-spacing: 0.02em; margin-bottom: 4px; }
+      .subtitle { font-size: 12px; color: var(--text-muted); letter-spacing: 0.08em; text-transform: uppercase; }
 
-      /* ── LIVE INDICATOR ── */
+      /* LIVE INDICATOR */
       .live-indicator {
         margin-left: auto;
-        display: flex;
-        align-items: center;
-        gap: 10px;
+        display: flex; align-items: center; gap: 10px;
         background: var(--panel);
         border: 1px solid var(--border);
         border-radius: 999px;
         padding: 8px 16px;
-        font-size: 12px;
-        color: var(--text-muted);
+        font-size: 12px; color: var(--text-muted);
         white-space: nowrap;
       }
-
-      .live-dot-wrap {
-        display: flex;
-        align-items: center;
-        gap: 6px;
-      }
-
+      .live-dot-wrap { display: flex; align-items: center; gap: 6px; }
       .live-dot {
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
+        width: 8px; height: 8px; border-radius: 50%;
         background: var(--accent-green);
         box-shadow: 0 0 6px var(--accent-green);
         transition: background 0.4s, box-shadow 0.4s;
-      }
-
-      .live-dot.stale {
-        background: var(--accent-amber);
-        box-shadow: 0 0 6px var(--accent-amber);
-        animation: none;
-      }
-
-      .live-dot.dead {
-        background: #555;
-        box-shadow: none;
-        animation: none;
-      }
-
-      @keyframes pulse {
-        0%, 100% { opacity: 1; }
-        50% { opacity: 0.4; }
-      }
-
-      .live-dot:not(.stale):not(.dead) {
         animation: pulse 2s ease-in-out infinite;
       }
-
-      .live-status-text {
-        font-weight: 600;
-        color: var(--accent-green);
-        transition: color 0.4s;
-        letter-spacing: 0.05em;
-      }
-
-      .live-status-text.stale {
-        color: var(--accent-amber);
-      }
-
-      .live-status-text.dead {
-        color: #555;
-      }
-
-      .live-divider {
-        width: 1px;
-        height: 14px;
-        background: var(--border);
-      }
-
-      .live-timestamp {
-        font-size: 12px;
-        color: var(--text-muted);
-      }
-
-      #live-last-updated {
-        color: var(--text);
-        font-weight: 500;
-      }
-      /* ── END LIVE INDICATOR ── */
+      .live-dot.stale { background: var(--accent-amber); box-shadow: 0 0 6px var(--accent-amber); animation: none; }
+      .live-dot.dead  { background: #555; box-shadow: none; animation: none; }
+      @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+      .live-status-text { font-weight: 600; color: var(--accent-green); transition: color 0.4s; letter-spacing: 0.05em; }
+      .live-status-text.stale { color: var(--accent-amber); }
+      .live-status-text.dead  { color: #555; }
+      .live-divider { width: 1px; height: 14px; background: var(--border); }
+      .live-timestamp { font-size: 12px; color: var(--text-muted); }
+      #live-last-updated { color: var(--text); font-weight: 500; }
 
       .summary-grid {
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 18px;
-        margin-bottom: 24px;
+        gap: 18px; margin-bottom: 24px;
       }
-
       .summary-card {
-        background: var(--panel);
-        border: 1px solid var(--border);
-        border-radius: var(--radius);
-        padding: 20px 22px;
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-        min-height: 50px; 
+        background: var(--panel); border: 1px solid var(--border);
+        border-radius: var(--radius); padding: 20px 22px;
+        display: flex; flex-direction: column; gap: 8px; min-height: 50px;
       }
-
-      .summary-label {
-        font-size: 12px;
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-        color: var(--text-muted);
-      }
-
-      .summary-value {
-        font-size: 34px;
-        font-weight: 600;
-      }
-
-      .summary-value.running {
-        color: var(--accent-green);
-      }
-
-      .summary-value.stopped {
-        color: var(--accent-red);
-      }
-
-      .summary-value.offline {
-        color: var(--accent-amber);
-      }
+      .summary-label { font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); }
+      .summary-value { font-size: 34px; font-weight: 600; }
+      .summary-value.running { color: var(--accent-green); }
+      .summary-value.stopped { color: var(--accent-red); }
+      .summary-value.offline { color: var(--accent-amber); }
 
       .machines-grid {
         display: grid;
@@ -211,102 +106,60 @@
       }
 
       .machine-card {
-        background: var(--panel-2);
-        border: 1px solid var(--border);
-        border-radius: var(--radius);
-        padding: 20px 22px;
-        min-height: 200px;
-        border-top: 3px solid var(--border);
+        background: var(--panel-2); border: 1px solid var(--border);
+        border-radius: var(--radius); padding: 20px 22px;
+        min-height: 200px; border-top: 3px solid var(--border);
+        display: flex; flex-direction: column;
       }
-
-      .machine-card.running {
-        border-top-color: var(--accent-green);
-      }
-
-      .machine-card.stopped {
-        border-top-color: var(--accent-red);
-      }
-
-      .machine-card.idle {
-        border-top-color: var(--accent-amber);
-      }
-
-      .machine-card.offline {
-        border-top-color: var(--accent-amber);
-      }
+      .machine-card.running { border-top-color: var(--accent-green); }
+      .machine-card.stopped { border-top-color: var(--accent-red); }
+      .machine-card.idle    { border-top-color: var(--accent-amber); }
+      .machine-card.offline { border-top-color: var(--accent-amber); }
 
       .card-top {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-        margin-bottom: 12px;
+        display: flex; justify-content: space-between;
+        align-items: flex-start; margin-bottom: 12px;
       }
+      .card-name { font-size: 16px; font-weight: 600; }
+      .card-meta { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
 
-      .card-name {
-        font-size: 16px;
-        font-weight: 600;
-      }
-
-      .card-meta {
-        font-size: 12px;
-        color: var(--text-muted);
-        margin-top: 2px;
-      }
-
-      .badge {
-        font-size: 11px;
-        padding: 5px 10px;
-        border-radius: 999px;
-        font-weight: 600;
-      }
-
-      .badge.running {
-        background: rgba(63, 185, 80, 0.2);
-        color: var(--accent-green);
-      }
-
-      .badge.stopped {
-        background: rgba(248, 81, 73, 0.2);
-        color: var(--accent-red);
-      }
-
-      .badge.idle {
-        background: rgba(210, 153, 34, 0.2);
-        color: var(--accent-amber);
-      }
-
-      .badge.offline {
-        background: rgba(210, 153, 34, 0.2);
-        color: var(--accent-amber);
-      }
+      .badge { font-size: 11px; padding: 5px 10px; border-radius: 999px; font-weight: 600; }
+      .badge.running { background: rgba(63,185,80,0.2);  color: var(--accent-green); }
+      .badge.stopped { background: rgba(248,81,73,0.2);  color: var(--accent-red); }
+      .badge.idle    { background: rgba(210,153,34,0.2); color: var(--accent-amber); }
+      .badge.offline { background: rgba(210,153,34,0.2); color: var(--accent-amber); }
 
       .card-stats {
-        border-top: 1px solid var(--border);
-        padding-top: 12px;
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
+        border-top: 1px solid var(--border); padding-top: 12px;
+        display: flex; flex-direction: column; gap: 8px;
       }
+      .stat-row { display: flex; justify-content: space-between; font-size: 13px; }
+      .stat-label { color: var(--text-muted); }
+      .stat-value { font-weight: 600; }
 
-      .stat-row {
-        display: flex;
-        justify-content: space-between;
-        font-size: 13px;
-      }
+      .card-footer { margin-top: 12px; font-size: 11px; color: var(--text-muted); }
 
-      .stat-label {
+      /* HISTORICAL DATA BUTTON */
+      .btn-history {
+        margin-top: 14px;
+        display: inline-flex; align-items: center; gap: 6px;
+        padding: 7px 14px;
+        font-size: 11px; font-weight: 600;
         color: var(--text-muted);
+        background: transparent;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: color 0.2s, border-color 0.2s, background 0.2s;
+        align-self: flex-start;
       }
-
-      .stat-value {
-        font-weight: 600;
+      .btn-history:hover {
+        color: var(--text);
+        border-color: #4a5568;
+        background: rgba(255,255,255,0.04);
       }
-
-      .card-footer {
-        margin-top: 12px;
-        font-size: 11px;
-        color: var(--text-muted);
-      }
+      .btn-history svg { flex-shrink: 0; }
 
       @media (max-width: 900px) {
         body { padding: 24px; }
@@ -325,8 +178,6 @@
           <div class="title">SAT - Finishing Insight Center</div>
           <div class="subtitle">South Asia Textiles Limited</div>
         </div>
-
-        <!-- LIVE INDICATOR -->
         <div class="live-indicator">
           <div class="live-dot-wrap">
             <div class="live-dot" id="live-dot"></div>
@@ -353,6 +204,7 @@
       </div>
 
       <div class="machines-grid">
+
         <div class="machine-card running" data-id="Compactor 1">
           <div class="card-top">
             <div>
@@ -367,6 +219,10 @@
             <div class="stat-row"><span class="stat-label">Running Speed</span><span class="stat-value" data-field="speed">120 m/min</span></div>
           </div>
           <div class="card-footer" data-field="lastUpdated">Last update: 14:50</div>
+          <a class="btn-history" href="https://docs.google.com/spreadsheets/d/1yCD-u9eoYVAmbF935zILkEKf2BD1YQxBedqUndSiNU4/edit?usp=drive_link" target="_blank" rel="noopener">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            Historical Data
+          </a>
         </div>
 
         <div class="machine-card stopped" data-id="Compactor 2">
@@ -383,6 +239,10 @@
             <div class="stat-row"><span class="stat-label">Running Speed</span><span class="stat-value" data-field="speed">0 m/min</span></div>
           </div>
           <div class="card-footer" data-field="lastUpdated">Last update: 10:18</div>
+          <a class="btn-history" href="https://docs.google.com/spreadsheets/d/1zNxju-VI4WHeDKFePFCPkWuSMe4rAszFu7v5yyjeLjA/edit?usp=drive_link" target="_blank" rel="noopener">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            Historical Data
+          </a>
         </div>
 
         <div class="machine-card stopped" data-id="Stenter 3">
@@ -399,6 +259,10 @@
             <div class="stat-row"><span class="stat-label">Running Speed</span><span class="stat-value" data-field="speed">0 m/min</span></div>
           </div>
           <div class="card-footer" data-field="lastUpdated">Last update: 10:18</div>
+          <a class="btn-history" href="https://docs.google.com/spreadsheets/d/1AEwbUULM_SpO7WXUxgtZIrmw-qqvfOTFh61lw2plgcA/edit?usp=drive_link" target="_blank" rel="noopener">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            Historical Data
+          </a>
         </div>
 
         <div class="machine-card running" data-id="Stenter 2">
@@ -415,6 +279,10 @@
             <div class="stat-row"><span class="stat-label">Running Speed</span><span class="stat-value" data-field="speed">120 m/min</span></div>
           </div>
           <div class="card-footer" data-field="lastUpdated">Last update: 14:46</div>
+          <a class="btn-history" href="https://docs.google.com/spreadsheets/d/1rZAlEYm2Uj6HqcOaZSkHDvRqxBjwZ6DY3cWgbKKzKc4/edit?usp=drive_link" target="_blank" rel="noopener">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            Historical Data
+          </a>
         </div>
 
         <div class="machine-card stopped" data-id="Stenter 1">
@@ -431,6 +299,10 @@
             <div class="stat-row"><span class="stat-label">Running Speed</span><span class="stat-value" data-field="speed">0 m/min</span></div>
           </div>
           <div class="card-footer" data-field="lastUpdated">Last update: 10:18</div>
+          <a class="btn-history" href="https://docs.google.com/spreadsheets/d/1SpWE4iOtCQjLdjQtBAvmhQUeH5cEUg2tVDrJMVfZR48/edit?usp=drive_link" target="_blank" rel="noopener">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            Historical Data
+          </a>
         </div>
 
         <div class="machine-card idle" data-id="Stenter 5">
@@ -447,6 +319,10 @@
             <div class="stat-row"><span class="stat-label">Running Speed</span><span class="stat-value" data-field="speed">0 m/min</span></div>
           </div>
           <div class="card-footer" data-field="lastUpdated">Last update: 07:11</div>
+          <a class="btn-history" href="https://docs.google.com/spreadsheets/d/1H76J6vL7TcOME1ielTMZOIkgNcjLuuBKY-86DxjuhGQ/edit?usp=drive_link" target="_blank" rel="noopener">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            Historical Data
+          </a>
         </div>
 
         <div class="machine-card stopped" data-id="Stenter 6">
@@ -463,6 +339,10 @@
             <div class="stat-row"><span class="stat-label">Running Speed</span><span class="stat-value" data-field="speed">0 m/min</span></div>
           </div>
           <div class="card-footer" data-field="lastUpdated">Last update: 10:18</div>
+          <a class="btn-history" href="https://docs.google.com/spreadsheets/d/12rH6XhvcoOCV430bfRZvKyGINLmtJb9ZCb5lOuZPmUY/edit?usp=drive_link" target="_blank" rel="noopener">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            Historical Data
+          </a>
         </div>
 
         <div class="machine-card running" data-id="Syntex Drier">
@@ -479,23 +359,28 @@
             <div class="stat-row"><span class="stat-label">Running Speed</span><span class="stat-value" data-field="speed">120 m/min</span></div>
           </div>
           <div class="card-footer" data-field="lastUpdated">Last update: 14:48</div>
+          <a class="btn-history" href="https://docs.google.com/spreadsheets/d/1GgD0bZbTxRRi0kEUzb9R6q1jrNKxr1uH2g855gaag1s/edit?usp=drive_link" target="_blank" rel="noopener">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            Historical Data
+          </a>
         </div>
+
       </div>
     </div>
 
     <script>
-      // ── LIVE INDICATOR LOGIC ──
+      // LIVE INDICATOR
       let lastMqttTime = null;
-      const STALE_MS = 2 * 60 * 1000; // 2 minutes → amber
-      const DEAD_MS  = 5 * 60 * 1000; // 5 minutes → grey
+      const STALE_MS = 2 * 60 * 1000;
+      const DEAD_MS  = 5 * 60 * 1000;
 
       function formatTimestamp(date) {
-        const dd = String(date.getDate()).padStart(2, '0');
-        const mm = String(date.getMonth() + 1).padStart(2, '0');
+        const dd   = String(date.getDate()).padStart(2,'0');
+        const mm   = String(date.getMonth()+1).padStart(2,'0');
         const yyyy = date.getFullYear();
-        const hh = String(date.getHours()).padStart(2, '0');
-        const min = String(date.getMinutes()).padStart(2, '0');
-        const ss = String(date.getSeconds()).padStart(2, '0');
+        const hh   = String(date.getHours()).padStart(2,'0');
+        const min  = String(date.getMinutes()).padStart(2,'0');
+        const ss   = String(date.getSeconds()).padStart(2,'0');
         return `${dd}/${mm}/${yyyy} ${hh}:${min}:${ss}`;
       }
 
@@ -510,10 +395,9 @@
         ts.textContent = formatTimestamp(new Date());
       }
 
-      // Check staleness every 15 seconds
       setInterval(() => {
         if (lastMqttTime === null) return;
-        const age = Date.now() - lastMqttTime;
+        const age  = Date.now() - lastMqttTime;
         const dot  = document.getElementById('live-dot');
         const text = document.getElementById('live-status-text');
         if (age > DEAD_MS) {
@@ -527,74 +411,59 @@
         }
       }, 15000);
 
-      // Expose so simulator.js can call it on each MQTT message
       window.setLiveReceived = setLiveReceived;
-      // ── END LIVE INDICATOR LOGIC ──
 
+      // DASHBOARD UPDATE
       function normalizeStatus(status) {
-        const value = String(status || '').toLowerCase();
-        if (value === 'running') return 'running';
-        if (value === 'stopped') return 'stopped';
-        if (value === 'idle') return 'idle';
+        const v = String(status||'').toLowerCase();
+        if (v==='running') return 'running';
+        if (v==='stopped') return 'stopped';
+        if (v==='idle')    return 'idle';
         return 'offline';
       }
-
       function formatHours(value) {
-        if (value === null || value === undefined || value === '') return '0.0 hrs';
-        return Number(value).toFixed(1) + ' hrs';
+        if (value===null||value===undefined||value==='') return '0.0 hrs';
+        return Number(value).toFixed(1)+' hrs';
       }
-
       function formatSpeed(value) {
-        if (value === null || value === undefined || value === '') return '0 m/min';
-        return Number(value).toFixed(1) + ' m/min';
+        if (value===null||value===undefined||value==='') return '0 m/min';
+        return Number(value).toFixed(1)+' m/min';
       }
 
       function updateDashboard(payload) {
         const machines = Array.isArray(payload.machines) ? payload.machines : [];
+        const total   = machines.length;
+        const running = machines.filter(m=>normalizeStatus(m.status)==='running').length;
+        const stopped = machines.filter(m=>normalizeStatus(m.status)==='stopped').length;
 
-        const total = machines.length;
-        const running = machines.filter(m => normalizeStatus(m.status) === 'running').length;
-        const stopped = machines.filter(m => normalizeStatus(m.status) === 'stopped').length;
-
-        document.getElementById('total-count').textContent = total;
+        document.getElementById('total-count').textContent   = total;
         document.getElementById('running-count').textContent = running;
         document.getElementById('stopped-count').textContent = stopped;
 
         machines.forEach(machine => {
           const card = document.querySelector(`.machine-card[data-id="${machine.name}"]`);
           if (!card) return;
-
           const status = normalizeStatus(machine.status);
-          card.classList.remove('running', 'stopped', 'idle', 'offline');
+          card.classList.remove('running','stopped','idle','offline');
           card.classList.add(status);
-
           const badge = card.querySelector('[data-field="status"]');
-          if (badge) {
-            badge.classList.remove('running', 'stopped', 'idle', 'offline');
-            badge.classList.add(status);
-            badge.textContent = status.toUpperCase();
-          }
-
+          if (badge) { badge.classList.remove('running','stopped','idle','offline'); badge.classList.add(status); badge.textContent = status.toUpperCase(); }
           const ip = card.querySelector('[data-field="ip"]');
-          if (ip) ip.textContent = machine.ip || '—';
-
+          if (ip) ip.textContent = machine.ip||'—';
           const daily = card.querySelector('[data-field="dailyHours"]');
           if (daily) daily.textContent = formatHours(machine.dailyHours);
-
           const totalHours = card.querySelector('[data-field="totalHours"]');
           if (totalHours) totalHours.textContent = formatHours(machine.totalHours);
-
           const speed = card.querySelector('[data-field="speed"]');
           if (speed) speed.textContent = formatSpeed(machine.speed);
-
           const lastUpdated = card.querySelector('[data-field="lastUpdated"]');
-          if (lastUpdated) lastUpdated.textContent = 'Last update: ' + (machine.lastUpdated || '—');
+          if (lastUpdated) lastUpdated.textContent = 'Last update: '+(machine.lastUpdated||'—');
         });
       }
 
       window.updateDashboard = updateDashboard;
     </script>
-    
+
     <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
     <script src="simulator.js"></script>
   </body>
