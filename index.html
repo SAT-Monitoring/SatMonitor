@@ -89,12 +89,12 @@
         gap: 18px; margin-bottom: 24px;
       }
       .summary-card {
-        background: var(--panel); border: 1px solid var(--border);
-        border-radius: var(--radius); padding: 20px 22px;
-        display: flex; flex-direction: column; gap: 8px; min-height: 50px;
+        background: var(--panel); border: 5px solid var(--border);
+        border-radius: var(--radius); padding: 12px 16px;
+        display: flex; flex-direction: column; gap: 6px; min-height: 0;
       }
-      .summary-label { font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); }
-      .summary-value { font-size: 34px; font-weight: 600; }
+      .summary-label { font-size: 13px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); }
+      .summary-value { font-size: 30px; font-weight: 600; }
       .summary-value.running { color: var(--accent-green); }
       .summary-value.stopped { color: var(--accent-red); }
       .summary-value.offline { color: var(--accent-amber); }
@@ -102,7 +102,7 @@
       .machines-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 40px;
+        gap: 19px;
       }
 
       .machine-card {
@@ -137,14 +137,21 @@
       .stat-label { color: var(--text-muted); }
       .stat-value { font-weight: 600; }
 
-      .card-footer { margin-top: 12px; font-size: 11px; color: var(--text-muted); }
+      .card-actions {
+        margin-top: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
+      .card-footer { margin-top: 0; font-size: 11px; color: var(--text-muted); }
 
       /* HISTORICAL DATA BUTTON */
       .btn-history {
-        margin-top: 14px;
+        margin-top: 0;
         display: inline-flex; align-items: center; gap: 6px;
         padding: 7px 14px;
-        font-size: 11px; font-weight: 600;
+        font-size: 10px; font-weight: 600;
         color: var(--text-muted);
         background: transparent;
         border: 1px solid var(--border);
@@ -218,11 +225,13 @@
             <div class="stat-row"><span class="stat-label">Total hours</span><span class="stat-value" data-field="totalHours">3065.5 hrs</span></div>
             <div class="stat-row"><span class="stat-label">Running Speed</span><span class="stat-value" data-field="speed">120 m/min</span></div>
           </div>
-          <div class="card-footer" data-field="lastUpdated">Last update: 14:50</div>
-          <a class="btn-history" href="https://docs.google.com/spreadsheets/d/1yCD-u9eoYVAmbF935zILkEKf2BD1YQxBedqUndSiNU4/edit?usp=drive_link" target="_blank" rel="noopener">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-            Historical Data
-          </a>
+          <div class="card-actions">
+            <div class="card-footer" data-field="lastUpdated">Last update: 14:50</div>
+            <a class="btn-history" href="https://docs.google.com/spreadsheets/d/1yCD-u9eoYVAmbF935zILkEKf2BD1YQxBedqUndSiNU4/edit?usp=drive_link" target="_blank" rel="noopener">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+              Historical Data
+            </a>
+          </div>
         </div>
 
         <div class="machine-card stopped" data-id="Compactor 2">
@@ -238,11 +247,13 @@
             <div class="stat-row"><span class="stat-label">Total hours</span><span class="stat-value" data-field="totalHours">0.0 hrs</span></div>
             <div class="stat-row"><span class="stat-label">Running Speed</span><span class="stat-value" data-field="speed">0 m/min</span></div>
           </div>
-          <div class="card-footer" data-field="lastUpdated">Last update: 10:18</div>
-          <a class="btn-history" href="https://docs.google.com/spreadsheets/d/1zNxju-VI4WHeDKFePFCPkWuSMe4rAszFu7v5yyjeLjA/edit?usp=drive_link" target="_blank" rel="noopener">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-            Historical Data
-          </a>
+          <div class="card-actions">
+            <div class="card-footer" data-field="lastUpdated">Last update: 10:18</div>
+            <a class="btn-history" href="https://docs.google.com/spreadsheets/d/1zNxju-VI4WHeDKFePFCPkWuSMe4rAszFu7v5yyjeLjA/edit?usp=drive_link" target="_blank" rel="noopener">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+              Historical Data
+            </a>
+          </div>
         </div>
 
         <div class="machine-card stopped" data-id="Stenter 3">
@@ -258,11 +269,13 @@
             <div class="stat-row"><span class="stat-label">Total hours</span><span class="stat-value" data-field="totalHours">0.0 hrs</span></div>
             <div class="stat-row"><span class="stat-label">Running Speed</span><span class="stat-value" data-field="speed">0 m/min</span></div>
           </div>
-          <div class="card-footer" data-field="lastUpdated">Last update: 10:18</div>
-          <a class="btn-history" href="https://docs.google.com/spreadsheets/d/1AEwbUULM_SpO7WXUxgtZIrmw-qqvfOTFh61lw2plgcA/edit?usp=drive_link" target="_blank" rel="noopener">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-            Historical Data
-          </a>
+          <div class="card-actions">
+            <div class="card-footer" data-field="lastUpdated">Last update: 10:18</div>
+            <a class="btn-history" href="https://docs.google.com/spreadsheets/d/1AEwbUULM_SpO7WXUxgtZIrmw-qqvfOTFh61lw2plgcA/edit?usp=drive_link" target="_blank" rel="noopener">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+              Historical Data
+            </a>
+          </div>
         </div>
 
         <div class="machine-card running" data-id="Stenter 2">
@@ -278,11 +291,13 @@
             <div class="stat-row"><span class="stat-label">Total hours</span><span class="stat-value" data-field="totalHours">2695.3 hrs</span></div>
             <div class="stat-row"><span class="stat-label">Running Speed</span><span class="stat-value" data-field="speed">120 m/min</span></div>
           </div>
-          <div class="card-footer" data-field="lastUpdated">Last update: 14:46</div>
-          <a class="btn-history" href="https://docs.google.com/spreadsheets/d/1rZAlEYm2Uj6HqcOaZSkHDvRqxBjwZ6DY3cWgbKKzKc4/edit?usp=drive_link" target="_blank" rel="noopener">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-            Historical Data
-          </a>
+          <div class="card-actions">
+            <div class="card-footer" data-field="lastUpdated">Last update: 14:46</div>
+            <a class="btn-history" href="https://docs.google.com/spreadsheets/d/1rZAlEYm2Uj6HqcOaZSkHDvRqxBjwZ6DY3cWgbKKzKc4/edit?usp=drive_link" target="_blank" rel="noopener">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+              Historical Data
+            </a>
+          </div>
         </div>
 
         <div class="machine-card stopped" data-id="Stenter 1">
@@ -298,11 +313,13 @@
             <div class="stat-row"><span class="stat-label">Total hours</span><span class="stat-value" data-field="totalHours">0.0 hrs</span></div>
             <div class="stat-row"><span class="stat-label">Running Speed</span><span class="stat-value" data-field="speed">0 m/min</span></div>
           </div>
-          <div class="card-footer" data-field="lastUpdated">Last update: 10:18</div>
-          <a class="btn-history" href="https://docs.google.com/spreadsheets/d/1SpWE4iOtCQjLdjQtBAvmhQUeH5cEUg2tVDrJMVfZR48/edit?usp=drive_link" target="_blank" rel="noopener">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-            Historical Data
-          </a>
+          <div class="card-actions">
+            <div class="card-footer" data-field="lastUpdated">Last update: 10:18</div>
+            <a class="btn-history" href="https://docs.google.com/spreadsheets/d/1SpWE4iOtCQjLdjQtBAvmhQUeH5cEUg2tVDrJMVfZR48/edit?usp=drive_link" target="_blank" rel="noopener">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+              Historical Data
+            </a>
+          </div>
         </div>
 
         <div class="machine-card idle" data-id="Stenter 5">
@@ -318,11 +335,13 @@
             <div class="stat-row"><span class="stat-label">Total hours</span><span class="stat-value" data-field="totalHours">1.0 hrs</span></div>
             <div class="stat-row"><span class="stat-label">Running Speed</span><span class="stat-value" data-field="speed">0 m/min</span></div>
           </div>
-          <div class="card-footer" data-field="lastUpdated">Last update: 07:11</div>
-          <a class="btn-history" href="https://docs.google.com/spreadsheets/d/1H76J6vL7TcOME1ielTMZOIkgNcjLuuBKY-86DxjuhGQ/edit?usp=drive_link" target="_blank" rel="noopener">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-            Historical Data
-          </a>
+          <div class="card-actions">
+            <div class="card-footer" data-field="lastUpdated">Last update: 07:11</div>
+            <a class="btn-history" href="https://docs.google.com/spreadsheets/d/1H76J6vL7TcOME1ielTMZOIkgNcjLuuBKY-86DxjuhGQ/edit?usp=drive_link" target="_blank" rel="noopener">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+              Historical Data
+            </a>
+          </div>
         </div>
 
         <div class="machine-card stopped" data-id="Stenter 6">
@@ -338,11 +357,13 @@
             <div class="stat-row"><span class="stat-label">Total hours</span><span class="stat-value" data-field="totalHours">0.0 hrs</span></div>
             <div class="stat-row"><span class="stat-label">Running Speed</span><span class="stat-value" data-field="speed">0 m/min</span></div>
           </div>
-          <div class="card-footer" data-field="lastUpdated">Last update: 10:18</div>
-          <a class="btn-history" href="https://docs.google.com/spreadsheets/d/12rH6XhvcoOCV430bfRZvKyGINLmtJb9ZCb5lOuZPmUY/edit?usp=drive_link" target="_blank" rel="noopener">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-            Historical Data
-          </a>
+          <div class="card-actions">
+            <div class="card-footer" data-field="lastUpdated">Last update: 10:18</div>
+            <a class="btn-history" href="https://docs.google.com/spreadsheets/d/12rH6XhvcoOCV430bfRZvKyGINLmtJb9ZCb5lOuZPmUY/edit?usp=drive_link" target="_blank" rel="noopener">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+              Historical Data
+            </a>
+          </div>
         </div>
 
         <div class="machine-card running" data-id="Syntex Drier">
@@ -358,11 +379,13 @@
             <div class="stat-row"><span class="stat-label">Total hours</span><span class="stat-value" data-field="totalHours">1420.8 hrs</span></div>
             <div class="stat-row"><span class="stat-label">Running Speed</span><span class="stat-value" data-field="speed">120 m/min</span></div>
           </div>
-          <div class="card-footer" data-field="lastUpdated">Last update: 14:48</div>
-          <a class="btn-history" href="https://docs.google.com/spreadsheets/d/1GgD0bZbTxRRi0kEUzb9R6q1jrNKxr1uH2g855gaag1s/edit?usp=drive_link" target="_blank" rel="noopener">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-            Historical Data
-          </a>
+          <div class="card-actions">
+            <div class="card-footer" data-field="lastUpdated">Last update: 14:48</div>
+            <a class="btn-history" href="https://docs.google.com/spreadsheets/d/1GgD0bZbTxRRi0kEUzb9R6q1jrNKxr1uH2g855gaag1s/edit?usp=drive_link" target="_blank" rel="noopener">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+              Historical Data
+            </a>
+          </div>
         </div>
 
       </div>
