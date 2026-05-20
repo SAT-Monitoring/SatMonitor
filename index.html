@@ -28,7 +28,7 @@
           var(--bg);
         color: var(--text);
         min-height: 100vh;
-        padding: 40px 40px 56px;
+        padding: 20px 40px 40px;
       }
 
       .container { max-width: 1400px; margin: 0 auto; }
@@ -37,7 +37,7 @@
         display: flex;
         align-items: center;
         gap: 14px;
-        margin-bottom: 24px;
+        margin-bottom: 16px;
       }
 
       .logo {
@@ -79,17 +79,18 @@
       .live-status-text { font-weight: 600; color: var(--accent-green); transition: color 0.4s; letter-spacing: 0.05em; }
       .live-status-text.stale { color: var(--accent-amber); }
       .live-status-text.dead  { color: #555; }
-      .live-divider { width: 1px; height: 14px; background: var(--border); }
-      .live-timestamp { font-size: 12px; color: var(--text-muted); }
-      #live-last-updated { color: var(--text); font-weight: 500; }
+      .live-label { color: var(--text-muted); font-size: 12px; }
+      .live-sep { color: var(--text-muted); margin: 0 4px; }
+      .live-date,
+      .live-time { font-size: 12px; color: var(--text); font-weight: 600; }
 
       .summary-grid {
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 18px; margin-bottom: 24px;
+        gap: 18px; margin-bottom: 16px;
       }
       .summary-card {
-        background: var(--panel); border: 5px solid var(--border);
+        background: var(--panel); border: 1px solid var(--border);
         border-radius: var(--radius); padding: 12px 16px;
         display: flex; flex-direction: column; gap: 6px; min-height: 0;
       }
@@ -144,11 +145,23 @@
         justify-content: space-between;
         gap: 12px;
       }
-      .card-footer { margin-top: 0; font-size: 11px; color: var(--text-muted); }
+      .card-footer {
+        margin-top: 0;
+        font-size: 11px;
+        color: var(--text-muted);
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        padding: 2px 0;
+      }
+      .last-update-title { font-weight: 600; color: var(--text); }
+      .last-update-row { display: flex; gap: 6px; }
+      .last-update-label { color: var(--text-muted); }
+      .last-update-value { color: var(--text); }
 
       /* HISTORICAL DATA BUTTON */
       .btn-history {
-        margin-top: 0;
+        margin-top: 16px;
         display: inline-flex; align-items: center; gap: 6px;
         padding: 7px 14px;
         font-size: 10px; font-weight: 600;
@@ -159,7 +172,7 @@
         cursor: pointer;
         text-decoration: none;
         transition: color 0.2s, border-color 0.2s, background 0.2s;
-        align-self: flex-start;
+        align-self: center;
       }
       .btn-history:hover {
         color: var(--text);
@@ -167,6 +180,14 @@
         background: rgba(255,255,255,0.04);
       }
       .btn-history svg { flex-shrink: 0; }
+
+      .page-footer {
+        margin-top: 18px;
+        text-align: center;
+        font-size: 11px;
+        color: var(--text-muted);
+        letter-spacing: 0.06em;
+      }
 
       @media (max-width: 900px) {
         body { padding: 24px; }
@@ -190,8 +211,11 @@
             <div class="live-dot" id="live-dot"></div>
             <span class="live-status-text" id="live-status-text">LIVE</span>
           </div>
-          <div class="live-divider"></div>
-          <span class="live-timestamp">Last updated &nbsp;<span id="live-last-updated">—</span></span>
+          <span class="live-label">Last update:</span>
+          <span class="live-sep">•</span>
+          <span class="live-date" id="live-date">—</span>
+          <span class="live-sep">•</span>
+          <span class="live-time" id="live-time">—</span>
         </div>
       </div>
 
@@ -226,7 +250,17 @@
             <div class="stat-row"><span class="stat-label">Running Speed</span><span class="stat-value" data-field="speed">120 m/min</span></div>
           </div>
           <div class="card-actions">
-            <div class="card-footer" data-field="lastUpdated">Last update: 14:50</div>
+            <div class="card-footer" data-field="lastUpdated">
+              <div class="last-update-title">Last update</div>
+              <div class="last-update-row">
+                <span class="last-update-label">Time:</span>
+                <span class="last-update-value" data-field="lastUpdatedTime">14:50</span>
+              </div>
+              <div class="last-update-row">
+                <span class="last-update-label">Date:</span>
+                <span class="last-update-value" data-field="lastUpdatedDate">—</span>
+              </div>
+            </div>
             <a class="btn-history" href="https://docs.google.com/spreadsheets/d/1yCD-u9eoYVAmbF935zILkEKf2BD1YQxBedqUndSiNU4/edit?usp=drive_link" target="_blank" rel="noopener">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
               Historical Data
@@ -248,7 +282,17 @@
             <div class="stat-row"><span class="stat-label">Running Speed</span><span class="stat-value" data-field="speed">0 m/min</span></div>
           </div>
           <div class="card-actions">
-            <div class="card-footer" data-field="lastUpdated">Last update: 10:18</div>
+            <div class="card-footer" data-field="lastUpdated">
+              <div class="last-update-title">Last update</div>
+              <div class="last-update-row">
+                <span class="last-update-label">Time:</span>
+                <span class="last-update-value" data-field="lastUpdatedTime">10:18</span>
+              </div>
+              <div class="last-update-row">
+                <span class="last-update-label">Date:</span>
+                <span class="last-update-value" data-field="lastUpdatedDate">—</span>
+              </div>
+            </div>
             <a class="btn-history" href="https://docs.google.com/spreadsheets/d/1zNxju-VI4WHeDKFePFCPkWuSMe4rAszFu7v5yyjeLjA/edit?usp=drive_link" target="_blank" rel="noopener">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
               Historical Data
@@ -270,7 +314,17 @@
             <div class="stat-row"><span class="stat-label">Running Speed</span><span class="stat-value" data-field="speed">0 m/min</span></div>
           </div>
           <div class="card-actions">
-            <div class="card-footer" data-field="lastUpdated">Last update: 10:18</div>
+            <div class="card-footer" data-field="lastUpdated">
+              <div class="last-update-title">Last update</div>
+              <div class="last-update-row">
+                <span class="last-update-label">Time:</span>
+                <span class="last-update-value" data-field="lastUpdatedTime">10:18</span>
+              </div>
+              <div class="last-update-row">
+                <span class="last-update-label">Date:</span>
+                <span class="last-update-value" data-field="lastUpdatedDate">—</span>
+              </div>
+            </div>
             <a class="btn-history" href="https://docs.google.com/spreadsheets/d/1AEwbUULM_SpO7WXUxgtZIrmw-qqvfOTFh61lw2plgcA/edit?usp=drive_link" target="_blank" rel="noopener">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
               Historical Data
@@ -292,7 +346,17 @@
             <div class="stat-row"><span class="stat-label">Running Speed</span><span class="stat-value" data-field="speed">120 m/min</span></div>
           </div>
           <div class="card-actions">
-            <div class="card-footer" data-field="lastUpdated">Last update: 14:46</div>
+            <div class="card-footer" data-field="lastUpdated">
+              <div class="last-update-title">Last update</div>
+              <div class="last-update-row">
+                <span class="last-update-label">Time:</span>
+                <span class="last-update-value" data-field="lastUpdatedTime">14:46</span>
+              </div>
+              <div class="last-update-row">
+                <span class="last-update-label">Date:</span>
+                <span class="last-update-value" data-field="lastUpdatedDate">—</span>
+              </div>
+            </div>
             <a class="btn-history" href="https://docs.google.com/spreadsheets/d/1rZAlEYm2Uj6HqcOaZSkHDvRqxBjwZ6DY3cWgbKKzKc4/edit?usp=drive_link" target="_blank" rel="noopener">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
               Historical Data
@@ -314,7 +378,17 @@
             <div class="stat-row"><span class="stat-label">Running Speed</span><span class="stat-value" data-field="speed">0 m/min</span></div>
           </div>
           <div class="card-actions">
-            <div class="card-footer" data-field="lastUpdated">Last update: 10:18</div>
+            <div class="card-footer" data-field="lastUpdated">
+              <div class="last-update-title">Last update</div>
+              <div class="last-update-row">
+                <span class="last-update-label">Time:</span>
+                <span class="last-update-value" data-field="lastUpdatedTime">10:18</span>
+              </div>
+              <div class="last-update-row">
+                <span class="last-update-label">Date:</span>
+                <span class="last-update-value" data-field="lastUpdatedDate">—</span>
+              </div>
+            </div>
             <a class="btn-history" href="https://docs.google.com/spreadsheets/d/1SpWE4iOtCQjLdjQtBAvmhQUeH5cEUg2tVDrJMVfZR48/edit?usp=drive_link" target="_blank" rel="noopener">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
               Historical Data
@@ -336,7 +410,17 @@
             <div class="stat-row"><span class="stat-label">Running Speed</span><span class="stat-value" data-field="speed">0 m/min</span></div>
           </div>
           <div class="card-actions">
-            <div class="card-footer" data-field="lastUpdated">Last update: 07:11</div>
+            <div class="card-footer" data-field="lastUpdated">
+              <div class="last-update-title">Last update</div>
+              <div class="last-update-row">
+                <span class="last-update-label">Time:</span>
+                <span class="last-update-value" data-field="lastUpdatedTime">07:11</span>
+              </div>
+              <div class="last-update-row">
+                <span class="last-update-label">Date:</span>
+                <span class="last-update-value" data-field="lastUpdatedDate">—</span>
+              </div>
+            </div>
             <a class="btn-history" href="https://docs.google.com/spreadsheets/d/1H76J6vL7TcOME1ielTMZOIkgNcjLuuBKY-86DxjuhGQ/edit?usp=drive_link" target="_blank" rel="noopener">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
               Historical Data
@@ -358,7 +442,17 @@
             <div class="stat-row"><span class="stat-label">Running Speed</span><span class="stat-value" data-field="speed">0 m/min</span></div>
           </div>
           <div class="card-actions">
-            <div class="card-footer" data-field="lastUpdated">Last update: 10:18</div>
+            <div class="card-footer" data-field="lastUpdated">
+              <div class="last-update-title">Last update</div>
+              <div class="last-update-row">
+                <span class="last-update-label">Time:</span>
+                <span class="last-update-value" data-field="lastUpdatedTime">10:18</span>
+              </div>
+              <div class="last-update-row">
+                <span class="last-update-label">Date:</span>
+                <span class="last-update-value" data-field="lastUpdatedDate">—</span>
+              </div>
+            </div>
             <a class="btn-history" href="https://docs.google.com/spreadsheets/d/12rH6XhvcoOCV430bfRZvKyGINLmtJb9ZCb5lOuZPmUY/edit?usp=drive_link" target="_blank" rel="noopener">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
               Historical Data
@@ -380,7 +474,17 @@
             <div class="stat-row"><span class="stat-label">Running Speed</span><span class="stat-value" data-field="speed">120 m/min</span></div>
           </div>
           <div class="card-actions">
-            <div class="card-footer" data-field="lastUpdated">Last update: 14:48</div>
+            <div class="card-footer" data-field="lastUpdated">
+              <div class="last-update-title">Last update</div>
+              <div class="last-update-row">
+                <span class="last-update-label">Time:</span>
+                <span class="last-update-value" data-field="lastUpdatedTime">14:48</span>
+              </div>
+              <div class="last-update-row">
+                <span class="last-update-label">Date:</span>
+                <span class="last-update-value" data-field="lastUpdatedDate">—</span>
+              </div>
+            </div>
             <a class="btn-history" href="https://docs.google.com/spreadsheets/d/1GgD0bZbTxRRi0kEUzb9R6q1jrNKxr1uH2g855gaag1s/edit?usp=drive_link" target="_blank" rel="noopener">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
               Historical Data
@@ -390,6 +494,7 @@
 
       </div>
     </div>
+    <div class="page-footer">Version v1.0.0</div>
 
     <script>
       // LIVE INDICATOR
@@ -397,25 +502,31 @@
       const STALE_MS = 2 * 60 * 1000;
       const DEAD_MS  = 5 * 60 * 1000;
 
-      function formatTimestamp(date) {
+      function formatDateOnly(date) {
         const dd   = String(date.getDate()).padStart(2,'0');
         const mm   = String(date.getMonth()+1).padStart(2,'0');
         const yyyy = date.getFullYear();
+        return `${dd}/${mm}/${yyyy}`;
+      }
+
+      function formatTimeOnly(date) {
         const hh   = String(date.getHours()).padStart(2,'0');
         const min  = String(date.getMinutes()).padStart(2,'0');
-        const ss   = String(date.getSeconds()).padStart(2,'0');
-        return `${dd}/${mm}/${yyyy} ${hh}:${min}:${ss}`;
+        return `${hh}:${min}`;
       }
 
       function setLiveReceived() {
         lastMqttTime = Date.now();
         const dot  = document.getElementById('live-dot');
         const text = document.getElementById('live-status-text');
-        const ts   = document.getElementById('live-last-updated');
+        const liveDate = document.getElementById('live-date');
+        const liveTime = document.getElementById('live-time');
         dot.className  = 'live-dot';
         text.className = 'live-status-text';
         text.textContent = 'LIVE';
-        ts.textContent = formatTimestamp(new Date());
+        const now = new Date();
+        if (liveDate) liveDate.textContent = formatDateOnly(now);
+        if (liveTime) liveTime.textContent = formatTimeOnly(now);
       }
 
       setInterval(() => {
@@ -453,6 +564,18 @@
         return Number(value).toFixed(1)+' m/min';
       }
 
+      function splitLastUpdated(value) {
+        if (value===null||value===undefined||value==='') return { date: '—', time: '—' };
+        const text = String(value).trim();
+        if (!text) return { date: '—', time: '—' };
+        const parts = text.split(' ');
+        if (parts.length >= 2) {
+          return { date: parts[0], time: parts.slice(1).join(' ') };
+        }
+        if (text.includes('/')) return { date: text, time: '—' };
+        return { date: '—', time: text };
+      }
+
       function updateDashboard(payload) {
         const machines = Array.isArray(payload.machines) ? payload.machines : [];
         const total   = machines.length;
@@ -479,8 +602,11 @@
           if (totalHours) totalHours.textContent = formatHours(machine.totalHours);
           const speed = card.querySelector('[data-field="speed"]');
           if (speed) speed.textContent = formatSpeed(machine.speed);
-          const lastUpdated = card.querySelector('[data-field="lastUpdated"]');
-          if (lastUpdated) lastUpdated.textContent = 'Last update: '+(machine.lastUpdated||'—');
+          const lastUpdatedDate = card.querySelector('[data-field="lastUpdatedDate"]');
+          const lastUpdatedTime = card.querySelector('[data-field="lastUpdatedTime"]');
+          const last = splitLastUpdated(machine.lastUpdated);
+          if (lastUpdatedDate) lastUpdatedDate.textContent = last.date;
+          if (lastUpdatedTime) lastUpdatedTime.textContent = last.time;
         });
       }
 
