@@ -79,6 +79,89 @@
         text-transform: uppercase;
       }
 
+      /* ── LIVE INDICATOR ── */
+      .live-indicator {
+        margin-left: auto;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        padding: 8px 16px;
+        font-size: 12px;
+        color: var(--text-muted);
+        white-space: nowrap;
+      }
+
+      .live-dot-wrap {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .live-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--accent-green);
+        box-shadow: 0 0 6px var(--accent-green);
+        transition: background 0.4s, box-shadow 0.4s;
+      }
+
+      .live-dot.stale {
+        background: var(--accent-amber);
+        box-shadow: 0 0 6px var(--accent-amber);
+        animation: none;
+      }
+
+      .live-dot.dead {
+        background: #555;
+        box-shadow: none;
+        animation: none;
+      }
+
+      @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.4; }
+      }
+
+      .live-dot:not(.stale):not(.dead) {
+        animation: pulse 2s ease-in-out infinite;
+      }
+
+      .live-status-text {
+        font-weight: 600;
+        color: var(--accent-green);
+        transition: color 0.4s;
+        letter-spacing: 0.05em;
+      }
+
+      .live-status-text.stale {
+        color: var(--accent-amber);
+      }
+
+      .live-status-text.dead {
+        color: #555;
+      }
+
+      .live-divider {
+        width: 1px;
+        height: 14px;
+        background: var(--border);
+      }
+
+      .live-timestamp {
+        font-size: 12px;
+        color: var(--text-muted);
+      }
+
+      #live-last-updated {
+        color: var(--text);
+        font-weight: 500;
+      }
+      /* ── END LIVE INDICATOR ── */
+
       .summary-grid {
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -228,6 +311,7 @@
       @media (max-width: 900px) {
         body { padding: 24px; }
         .summary-grid { grid-template-columns: 1fr; }
+        .live-indicator { display: none; }
       }
     </style>
   </head>
@@ -240,6 +324,16 @@
         <div>
           <div class="title">SAT - Finishing Insight Center</div>
           <div class="subtitle">South Asia Textiles Limited</div>
+        </div>
+
+        <!-- LIVE INDICATOR -->
+        <div class="live-indicator">
+          <div class="live-dot-wrap">
+            <div class="live-dot" id="live-dot"></div>
+            <span class="live-status-text" id="live-status-text">LIVE</span>
+          </div>
+          <div class="live-divider"></div>
+          <span class="live-timestamp">Last updated &nbsp;<span id="live-last-updated">—</span></span>
         </div>
       </div>
 
@@ -388,7 +482,55 @@
         </div>
       </div>
     </div>
+
     <script>
+      // ── LIVE INDICATOR LOGIC ──
+      let lastMqttTime = null;
+      const STALE_MS = 2 * 60 * 1000; // 2 minutes → amber
+      const DEAD_MS  = 5 * 60 * 1000; // 5 minutes → grey
+
+      function formatTimestamp(date) {
+        const dd = String(date.getDate()).padStart(2, '0');
+        const mm = String(date.getMonth() + 1).padStart(2, '0');
+        const yyyy = date.getFullYear();
+        const hh = String(date.getHours()).padStart(2, '0');
+        const min = String(date.getMinutes()).padStart(2, '0');
+        const ss = String(date.getSeconds()).padStart(2, '0');
+        return `${dd}/${mm}/${yyyy} ${hh}:${min}:${ss}`;
+      }
+
+      function setLiveReceived() {
+        lastMqttTime = Date.now();
+        const dot  = document.getElementById('live-dot');
+        const text = document.getElementById('live-status-text');
+        const ts   = document.getElementById('live-last-updated');
+        dot.className  = 'live-dot';
+        text.className = 'live-status-text';
+        text.textContent = 'LIVE';
+        ts.textContent = formatTimestamp(new Date());
+      }
+
+      // Check staleness every 15 seconds
+      setInterval(() => {
+        if (lastMqttTime === null) return;
+        const age = Date.now() - lastMqttTime;
+        const dot  = document.getElementById('live-dot');
+        const text = document.getElementById('live-status-text');
+        if (age > DEAD_MS) {
+          dot.className  = 'live-dot dead';
+          text.className = 'live-status-text dead';
+          text.textContent = 'OFFLINE';
+        } else if (age > STALE_MS) {
+          dot.className  = 'live-dot stale';
+          text.className = 'live-status-text stale';
+          text.textContent = 'STALE';
+        }
+      }, 15000);
+
+      // Expose so simulator.js can call it on each MQTT message
+      window.setLiveReceived = setLiveReceived;
+      // ── END LIVE INDICATOR LOGIC ──
+
       function normalizeStatus(status) {
         const value = String(status || '').toLowerCase();
         if (value === 'running') return 'running';
@@ -454,7 +596,6 @@
     </script>
     
     <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
-    
     <script src="simulator.js"></script>
   </body>
 </html>
