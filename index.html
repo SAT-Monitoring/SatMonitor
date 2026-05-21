@@ -40,6 +40,31 @@
         margin-bottom: 16px;
       }
 
+      .shift-indicator {
+        margin-left: auto;
+        margin-right: 80px;
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        padding: 8px 18px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2px;
+        min-width: 200px;
+      }
+      .shift-label {
+        font-size: 11px;
+        color: var(--text-muted);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+      .shift-value {
+        font-size: 14px;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+      }
+
       .logo {
         width: 52px; height: 52px;
         border-radius: 12px;
@@ -193,6 +218,7 @@
         body { padding: 24px; }
         .summary-grid { grid-template-columns: 1fr; }
         .live-indicator { display: none; }
+        .shift-indicator { display: none; }
       }
     </style>
   </head>
@@ -205,6 +231,10 @@
         <div>
           <div class="title">SAT - Finishing Insight Center</div>
           <div class="subtitle">South Asia Textiles Limited</div>
+        </div>
+        <div class="shift-indicator">
+          <div class="shift-label">Current shift</div>
+          <div class="shift-value" id="shift-value">—</div>
         </div>
         <div class="live-indicator">
           <div class="live-dot-wrap">
@@ -486,7 +516,7 @@
 
       </div>
     </div>
-    <div class="page-footer">Version v1.0.0</div>
+    <div class="page-footer">Version v1.0.1</div>
 
     <script>
       // LIVE INDICATOR
@@ -538,6 +568,26 @@
       }, 15000);
 
       window.setLiveReceived = setLiveReceived;
+
+      // SHIFT INDICATOR
+      function getShiftLabel(date) {
+        const minutes = (date.getHours() * 60) + date.getMinutes();
+        const dayStart = 7 * 60 + 30;   // 07:30
+        const nightStart = 19 * 60 + 30; // 19:30
+        if (minutes >= dayStart && minutes < nightStart) {
+          return 'DAY SHIFT';
+        }
+        return 'NIGHT SHIFT';
+      }
+
+      function updateShiftIndicator() {
+        const el = document.getElementById('shift-value');
+        if (!el) return;
+        el.textContent = getShiftLabel(new Date());
+      }
+
+      updateShiftIndicator();
+      setInterval(updateShiftIndicator, 60000);
 
       // DASHBOARD UPDATE
       function normalizeStatus(status) {
